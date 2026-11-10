@@ -16,7 +16,9 @@ import {
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon, User, Menu as MenuIcon } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./useAuth";
+import { useEffect, useState } from "react";
+import { checkBackend } from "../services/health";
 
 export default function Header() {
   const bg = useColorModeValue("teal.500", "white");
@@ -26,6 +28,13 @@ export default function Header() {
 
   const isAuthenticated = !!user;
   const userRole = user?.role;
+  const [status, setStatus] = useState("Connexion...");
+
+  useEffect(() => {
+    checkBackend()
+      .then((data) => setStatus(data.message))
+      .catch(() => setStatus("Erreur de connexion au backend"));
+  }, []);
 
   return (
     <Box
@@ -43,7 +52,7 @@ export default function Header() {
         <Flex align="center" gap={3}>
           <ChakraLink as={Link} to="/" fontWeight="medium">
           <Text fontWeight="bold" fontSize="lg" color="teal.500">
-            NOSTRARTAMUS
+            {status}
           </Text>
           </ChakraLink>
         </Flex>

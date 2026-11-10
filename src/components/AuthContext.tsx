@@ -1,23 +1,9 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { AuthContext } from "./AuthContextValue";
+import type { User } from "./AuthContextValue";
 
-type User = {
-  id: number;
-  username: string;
-  email: string;
-  role: string;
-};
 
-type AuthContextType = {
-  user: User | null;
-  login: () => Promise<void>;
-  logout: () => void;
-};
-
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  login: async () => {},
-  logout: () => {},
-});
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -66,4 +52,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+

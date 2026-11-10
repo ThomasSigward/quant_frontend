@@ -2,7 +2,7 @@ import { Box, Button, Input, VStack, Heading, useToast, useColorModeValue } from
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../components/AuthContext";
+import { useAuth } from "../components/useAuth";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -24,7 +24,8 @@ const LoginPage = () => {
       await login();
       navigate("/");
     } catch (error) {
-      toast({ title: "Erreur de connexion", status: "error", duration: 2000 });
+      console.error(error);
+      toast({ title: "Erreur de connexion - ", status: "error", duration: 2000 });
     }
   };
 
